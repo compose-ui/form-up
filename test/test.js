@@ -1,11 +1,11 @@
 var assert    = require( 'chai' ).assert
-var validation = require( '../' )
+var formUp    = require( '../' )
 var utils     = require( './_utils' )
 var isValid   = utils.isValid
 var isInvalid = utils.isInvalid
 var setValue  = utils.setValue
 
-validation.watch()
+formUp.watch()
 
 describe( 'validate', function() {
 
@@ -50,7 +50,7 @@ describe( 'validate', function() {
     var input = utils.addInput( form, { 'data-min-words': '3' })
 
     setValue( input, 'two words' )
-    validation.test( form )
+    formUp.test( form )
 
     // Check custom validation message
     assert.equal( input.parentNode.textContent, 'Please write at least 3 words.' )
