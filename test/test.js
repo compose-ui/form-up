@@ -50,7 +50,7 @@ describe( 'validate', function() {
     var input = utils.addInput( form, { 'data-min-words': '3' })
 
     setValue( input, 'two words' )
-    formUp.test( form )
+    formUp.validate( form )
 
     // Check custom validation message
     assert.equal( input.parentNode.textContent, 'Please write at least 3 words.' )

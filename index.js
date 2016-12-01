@@ -184,6 +184,6 @@ function showMessage( el ) {
 // Public API
 module.exports = {
   watch: watch,
-  test: validateForm
+  validate: validateForm
 }
 
