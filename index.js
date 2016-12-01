@@ -15,7 +15,7 @@ function supported() {
 
 
 // Watch for events ( if validation is suported )
-function run() {
+function watch() {
 
   if ( !supported() ) { return false }
 
@@ -32,14 +32,41 @@ function run() {
 
 }
 
+function validateForm( form ) {
+
+  // Scoped variables
+  var invalidInput = form.querySelector( 'input:invalid, textarea:invalid' )
+
+  // The form is valid, skip it
+  if ( !invalidInput ) { 
+
+    return true
+
+  }
+
+  else {
+
+    // Set validity state on element
+    checkInput( invalidInput )
+
+    // Show validation message
+    showMessage( invalidInput )
+    focus( invalidInput )
+
+    return false
+
+  }
+
+}
+
 // Handler for validation events
 var checkValidation = Event.callback.new( function( event ) {
 
   // Remove any pre-existing validation message
-  hideMessage( event.target ) 
+  hideMessage( event.target )
 
   checkInput( event.target, event.type )
-  
+
 })
 
 
@@ -67,9 +94,9 @@ function checkInput( input, event ) {
 function isValid( input ) {
 
   // If element only contains whitespace, strip value
-  if ( !input.value.replace( /\s/g, '' ).length ) 
+  if ( !input.value.replace( /\s/g, '' ).length )
     input.value = ''
-  
+
   // Set a custom validation message for word count
   if ( input.dataset.minWords ) checkCount( input, 'min' )
   if ( input.dataset.maxWords ) checkCount( input, 'max' )
@@ -87,11 +114,11 @@ function checkCount( input, limit ) {
   var phrasing     = ( limit == 'min' ) ? 'at least ' : 'no more than ',
       valid        = ( limit == 'min' ) ? !lessThanGoal : lessThanGoal,
       message      = '';
-      
+
   // Set a custom error message
-  if ( input.value && !valid ) 
+  if ( input.value && !valid )
     message = 'Please write ' + phrasing + goal + ' words.'
-    
+
   input.setCustomValidity( message )
 
 }
@@ -116,25 +143,18 @@ function focus( el ) {
 // Submission validation handler function
 function submit( event ) {
 
-  // Scoped variables
-  var invalidInput = event.target.querySelector( 'input:invalid, textarea:invalid' )
-
   // Skip validation if no invalid inputs found
-  if ( !invalidInput ) { return }
+  if ( !validateForm( event.target ) ) {
 
-  // Stop the submission event
-  event.preventDefault()
+    // Pause keydown/blur triggers for the next second to avoid neutral empty style
+    checkValidation.stop()
+    Event.delay( checkValidation.start, 1000 )
 
-  // Pause keydown/blur triggers for the next second to avoid neutral empty style
-  checkValidation.stop()
-  Event.delay( checkValidation.start, 1000 )
+    // Stop the submission event
+    event.preventDefault()
 
-  // Style validity on element
-  checkInput( invalidInput, 'submit' )
+  }
 
-  // Show validation message
-  showMessage( invalidInput )
-  focus( invalidInput )  
 
 }
 
@@ -163,9 +183,7 @@ function showMessage( el ) {
 
 // Public API
 module.exports = {
-  run: run,
-  checkInput: checkInput,
-  valid: isValid,
-  showMessage: showMessage
+  watch: watch,
+  test: validateForm
 }
 

@@ -1,7 +1,6 @@
 var assert = require('chai').assert
 var toolbox = require( 'compose-toolbox' )
 var Event = toolbox.event
-var validateForms = require( '../' )
 
 // Utlitiy function for easily appending to HTML
 var Utils = {

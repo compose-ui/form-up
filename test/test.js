@@ -1,11 +1,11 @@
-var assert = require( 'chai' ).assert
-var validateForms = require( '../' )
-var utils = require( './_utils' )
-var isValid = utils.isValid
+var assert    = require( 'chai' ).assert
+var validation = require( '../' )
+var utils     = require( './_utils' )
+var isValid   = utils.isValid
 var isInvalid = utils.isInvalid
-var setValue = utils.setValue
+var setValue  = utils.setValue
 
-validateForms.run()
+validation.watch()
 
 describe( 'validate', function() {
 
@@ -31,7 +31,7 @@ describe( 'validate', function() {
 
     var input = utils.addInput( form, { 'data-max-words': '3' })
 
-    setValue( input, 'test this' )
+    setValue( input, 'two words' )
     isValid( input )
 
   })
@@ -40,10 +40,8 @@ describe( 'validate', function() {
 
     var input = utils.addInput( form, { 'data-min-words': '3' })
 
-    setValue( input, 'test this' )
+    setValue( input, 'two words' )
     isInvalid( input )
-
-    validateForms.showMessage( input )
 
   })
 
@@ -51,8 +49,8 @@ describe( 'validate', function() {
 
     var input = utils.addInput( form, { 'data-min-words': '3' })
 
-    setValue( input, 'test this' )
-    validateForms.showMessage( input )
+    setValue( input, 'two words' )
+    validation.test( form )
 
     // Check custom validation message
     assert.equal( input.parentNode.textContent, 'Please write at least 3 words.' )
@@ -62,5 +60,15 @@ describe( 'validate', function() {
     // Check that messages are hidden when input is valid
     assert.equal( input.parentNode.textContent, '' )
 
+  })
+
+  it( 'traps form submissions', function() {
+
+    var input = utils.addInput( form, { 'data-min-words': '3' })
+
+    setValue( input, 'two words' )
+    utils.submit( form )
+
+    assert.equal( input.parentNode.textContent, 'Please write at least 3 words.' )
   })
 })

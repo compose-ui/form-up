@@ -1,5 +1,5 @@
 {
-  "name": "compose-validate-form",
+  "name": "compose-form-validation",
   "version": "1.0.0",
   "description": "A lightweight HTML5 form validation utility",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/compose-ui/validate-form.git"
+    "url": "git+https://github.com/compose-ui/form-validation.git"
   },
   "keywords": [
     "validate",
@@ -19,10 +19,10 @@
   "author": "Brandon Mathis",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/compose-ui/validate-form/issues"
+    "url": "https://github.com/compose-ui/form-validation/issues"
   },
 
-  "homepage": "https://github.com/compose-ui/validate-form#readme",
+  "homepage": "https://github.com/compose-ui/form-validation#readme",
 
   "dependencies": {
     "compose-toolbox": "^1.0.0"
