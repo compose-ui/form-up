@@ -1,2 +1,3 @@
-# validation
-A nifty form validation module.
+# FormUp
+
+A lightwight HTML5 form validation module.
