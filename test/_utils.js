@@ -12,7 +12,20 @@ var Utils = {
     return el.lastChild
   },
 
+  container: function() {
+    var div = document.querySelector('.container')
+
+    if ( !div ){
+      div = Utils.injectHTML( document.body, '<div class="container"></div>' )
+    } else {
+      div.innerHTML = ''
+    }
+    return div
+  },
+
   addInput: function( form, options ) {
+
+    options = options || {}
 
     defaults = {
       required: true,
@@ -33,6 +46,7 @@ var Utils = {
   },
 
   setValue: function( input, value ) {
+    input.setAttribute( 'value', value )
     input.value = value
     Event.fire( input, 'blur' )
   },
