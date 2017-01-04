@@ -33,7 +33,7 @@ var Utils = {
     }
 
     var label = Utils.injectHTML( form, '<label></label>' )
-    var input = Utils.injectHTML( label, '<input />' )
+    var input = Utils.injectHTML( label, '<input>' )
 
     for ( var attr in defaults ) { input.setAttribute( attr, defaults[attr] ) }
     for ( var attr in options ) { input.setAttribute( attr, options[attr] ) }
