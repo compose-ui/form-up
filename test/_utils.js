@@ -23,17 +23,17 @@ var Utils = {
     return div
   },
 
-  addInput: function( form, options ) {
+  addInput: function( form, options, tag ) {
 
     options = options || {}
+    tag = tag || '<input type="text">'
 
     defaults = {
       required: true,
-      type: 'text'
     }
 
     var label = Utils.injectHTML( form, '<label></label>' )
-    var input = Utils.injectHTML( label, '<input>' )
+    var input = Utils.injectHTML( label, tag )
 
     for ( var attr in defaults ) { input.setAttribute( attr, defaults[attr] ) }
     for ( var attr in options ) { input.setAttribute( attr, options[attr] ) }
@@ -49,6 +49,17 @@ var Utils = {
     input.setAttribute( 'value', value )
     input.value = value
     Event.fire( input, 'blur' )
+  },
+
+  selectOption: function( select, index ) {
+    select.selectedIndex = index
+
+    // Shabby test code justification: It's really hard to trigger events in tests, so this
+    // short circuits the system. It's not ideal but for now
+    // it'll do.
+    select.parentNode.classList.toggle( 'invalid', !select.checkValidity() )
+    select.parentNode.classList.toggle( 'valid', select.checkValidity() )
+
   },
 
   isValid: function( input ) {

@@ -5,6 +5,7 @@ var assert    = require( 'chai' ).assert,
     isValid   = utils.isValid,
     isInvalid = utils.isInvalid,
     setValue  = utils.setValue,
+    selectOption  = utils.selectOption,
     Event     = require( 'compose-event' )
 
 describe( 'formup', function() {
@@ -90,6 +91,19 @@ describe( 'formup', function() {
       utils.submit( form )
 
       assert.equal( input.parentNode.textContent, 'Please write at least 3 words.' )
+
+      fieldsetOne.removeChild( fieldsetOne.lastChild )
+    })
+
+    it( 'tests select elements', function() {
+      var select = utils.addInput( fieldsetOne, {}, '<select><option value="">Select something</option><option value="1">Something</option></select>')
+      
+      utils.submit( form )
+      isInvalid( select )
+
+      selectOption( select, 1 )
+
+      isValid( select )
 
       fieldsetOne.removeChild( fieldsetOne.lastChild )
     })
