@@ -36,6 +36,26 @@ describe( 'formup', function() {
       fieldsetOne.removeChild( fieldsetOne.lastChild )
     })
 
+    it( 'tests invalid values', function() {
+
+      var input = utils.addInput( fieldsetOne, { 'data-invalid-value': 'nope@nope.com' })
+
+      setValue( input, 'nope@nope.com' )
+      isInvalid( input )
+      formUp.validate( form )
+      assert.equal( input.parentNode.textContent, "Cannot equal 'nope@nope.com'" )
+
+      input.dataset.invalidValueMessage = 'Email address already registered'
+      formUp.validate( form )
+      assert.equal( input.parentNode.textContent, "Email address already registered" )
+
+      setValue( input, 'foo@bar.com' )
+      isValid( input )
+
+      fieldsetOne.removeChild( fieldsetOne.lastChild )
+
+    })
+
     it( 'tests maximum words', function() {
 
       var input = utils.addInput( fieldsetOne, { 'data-max-words': '3' })
