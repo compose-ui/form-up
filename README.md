@@ -33,13 +33,34 @@ var form = document.querySelector( '#your-form' )
 if ( formUp.validate( form ) ) {
   // Form is valid  
 } else {
-  // For is not valid
+  // Form is not valid
 }
 ```
 
 Here, `formUp.validate( form )` will return `true` or `false` based on the forms
 validity. It will set custom messages and style invalid inputs. However, to clear
 invalid styles you'll need to run this any time a form element is updated.
+
+
+### Custom Validation Messages
+
+Inputs can have custom validation messages with the
+`data-message` attribute. 
+
+This input uses the pattern attribute to check for a valid email address and then the `data-message` attribute to use a custom message if the field is invalid.
+
+```
+<input type="email" pattern="([^@]+@[^@]+\.[a-zA-Z]{2,}|)"
+data-message="Please enter a valid email address."
+required="required" value="">
+```
+
+### Custom Validation helpers
+
+- `data-max-words="3"` - Ensure no more than 3 words are entered.
+- `data-min-words="3"` - Ensure at least 3 words are entered.
+- `data-invalid-value="superman"` - Superman cannot be entered.
+- `data-invalid-value-message="Invalid value: superman"` - Sets a custom error message when a value matching the `data-invalid-value` is set.
 
 
 ## Progressive Forms
