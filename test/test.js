@@ -44,7 +44,7 @@ describe( 'formup', function() {
       setValue( input, 'nope@nope.com' )
       isInvalid( input )
       formUp.validate( form )
-      assert.equal( input.parentNode.textContent, "Cannot equal 'nope@nope.com'" )
+      assert.equal( input.parentNode.textContent, "Value 'nope@nope.com' is not permitted" )
 
       input.dataset.invalidValueMessage = 'Email address already registered'
       formUp.validate( form )
