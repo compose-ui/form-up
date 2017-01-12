@@ -42,7 +42,7 @@ var Utils = {
   },
 
   submit: function( form ) {
-    Event.fire( form, 'submit' )
+    Event.fire( form.querySelector('[type=submit]'), 'click' )
   },
 
   setValue: function( input, value ) {

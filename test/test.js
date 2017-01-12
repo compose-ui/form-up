@@ -11,7 +11,8 @@ var assert    = require( 'chai' ).assert,
 describe( 'formup', function() {
 
   var form = utils.injectHTML( utils.container(), '<form class="progressive"></form>' )
-  form.innerHTML = '<fieldset id="fieldsetOne" class="form-step"></fieldset>\
+  form.innerHTML = '<button type="submit">Submit</button>\
+    <fieldset id="fieldsetOne" class="form-step"></fieldset>\
     <fieldset id="fieldsetTwo" class="form-step"></fieldset>\
     <fieldset class="form-step"></fieldset>'
 
@@ -43,7 +44,7 @@ describe( 'formup', function() {
       setValue( input, 'nope@nope.com' )
       isInvalid( input )
       formUp.validate( form )
-      assert.equal( input.parentNode.textContent, "Cannot equal 'nope@nope.com'" )
+      assert.equal( input.parentNode.textContent, "Value 'nope@nope.com' is not permitted" )
 
       input.dataset.invalidValueMessage = 'Email address already registered'
       formUp.validate( form )
