@@ -143,8 +143,12 @@ describe( 'formup', function() {
     })
 
     it( 'can generate form navigation', function( ) {
-      var nav = form.querySelector( '.progressive-form-nav' )
-      console.log( nav.outerHTML )
+      assert.isDefined( form.querySelector( '.progressive-form-nav' ) )
+    })
+
+    it( 'customizes nav labels for form navigation', function( ) {
+      var step = form.querySelector( '.progressive-form-nav-item[data-step="2"]' )
+      assert.equal( step.textContent, 'Step Two' )
     })
 
     it( 'disables all but the first fieldset', function() {
@@ -203,7 +207,7 @@ describe( 'formup', function() {
       assert.isFalse( fieldsetOne.disabled )
       assert.isTrue( fieldsetTwo.disabled )
 
-      Event.fire( nav.querySelector('[data-step="2"]') , 'click' )
+      Event.fire( nav.querySelector( '[data-step="2"]' ), 'click' )
       assert.isTrue( fieldsetOne.disabled )
       assert.isFalse( fieldsetTwo.disabled )
 
