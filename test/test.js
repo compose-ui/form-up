@@ -1,4 +1,3 @@
-
 var assert    = require( 'chai' ).assert,
     formUp    = require( '../' ),
     utils     = require( './_utils' ),
@@ -10,10 +9,10 @@ var assert    = require( 'chai' ).assert,
 
 describe( 'formup', function() {
 
-  var form = utils.injectHTML( utils.container(), '<form class="progressive"></form>' )
+  var form = utils.injectHTML( utils.container(), '<form class="progressive" data-nav="true"></form>' )
   form.innerHTML = '<button type="submit">Submit</button>\
     <fieldset id="fieldsetOne" class="form-step"></fieldset>\
-    <fieldset id="fieldsetTwo" class="form-step"></fieldset>\
+    <fieldset id="fieldsetTwo" class="form-step" data-nav="Step Two"></fieldset>\
     <fieldset class="form-step"></fieldset>'
 
   var fieldsetOne = form.querySelector('#fieldsetOne')
@@ -135,17 +134,22 @@ describe( 'formup', function() {
 
     formUp.next( form, function( event, step ) {
 
-      // Manufacture a reason to go back
-      if ( step.fieldset.classList.contains('back') ) 
-        step.back()
+      // Manufacture a reason to prevent moving forward
+      if ( form.classList.contains('fake-error') ) 
+        step.revisit()
       else 
         step.forward()
 
     })
 
-    it( 'hides all but the first fieldset', function() {
+    it( 'can generate form navigation', function( ) {
+      var nav = form.querySelector( '.progressive-form-nav' )
+      console.log( nav.outerHTML )
+    })
 
-      assert.isTrue( !fieldsetOne.disabled )
+    it( 'disables all but the first fieldset', function() {
+
+      assert.isFalse( fieldsetOne.disabled )
       assert.isTrue( fieldsetTwo.disabled )
 
     })
@@ -157,7 +161,7 @@ describe( 'formup', function() {
 
       utils.submit( form )
 
-      assert.isTrue( !fieldsetOne.disabled )
+      assert.isFalse( fieldsetOne.disabled )
       assert.isTrue( fieldsetTwo.disabled )
 
       fieldsetOne.removeChild( fieldsetOne.lastChild )
@@ -178,14 +182,30 @@ describe( 'formup', function() {
 
     })
 
-    it( 'can step back', function( ) {
+    it( 'can revisit a fieldset after submission', function( ) {
       // Add a valid input
       var input = utils.addInput( fieldsetTwo, { value: 'true' } )
-      fieldsetTwo.classList.add( 'back' )
+      form.classList.add( 'fake-error' )
 
       utils.submit( form )
 
-      assert.isTrue( !fieldsetTwo.disabled )
+      assert.isFalse( fieldsetTwo.disabled )
+      assert.isTrue( fieldsetTwo.classList.contains( 'active' ) )
+
+    })
+
+    it( 'can go to a specific step', function( ) {
+
+      assert.isTrue( fieldsetOne.disabled )
+      var nav = document.querySelector( 'nav' )
+      
+      Event.fire( nav.firstChild, 'click' )
+      assert.isFalse( fieldsetOne.disabled )
+      assert.isTrue( fieldsetTwo.disabled )
+
+      Event.fire( nav.querySelector('[data-step="2"]') , 'click' )
+      assert.isTrue( fieldsetOne.disabled )
+      assert.isFalse( fieldsetTwo.disabled )
 
     })
 
