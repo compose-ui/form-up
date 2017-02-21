@@ -135,9 +135,7 @@ describe( 'formup', function() {
     formUp.next( form, function( event, step ) {
 
       // Manufacture a reason to prevent moving forward
-      if ( form.classList.contains('fake-error') ) 
-        step.revisit()
-      else 
+      if ( !form.classList.contains('fake-error') ) 
         step.forward()
 
     })
