@@ -87,6 +87,15 @@ Here's what a simple progressive form may look like.
 </form>
 ```
 
+To help with styling form steps (with transitions) these classnames are added to show state.
+
+```
+active    - the current step
+enter     - When a step transitions in
+exit      - When a step is being dismissed
+completed - When a step has been filled out
+```
+
 ### Handling the next event
 
 ```js
