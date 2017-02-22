@@ -99,7 +99,8 @@ formUp.next( form, function( event, step ) {
   // event is the submission event
 
   // step.forward() - go to the next step
-  // step.back()    - return to this step
+  // step.dismiss() - leave the current step
+  // step.revisit() - used after dismiss, return to a dismissed step (for example: to deal with an ajax error)
   // step.fieldset  - reference the current fieldset element
   // step.form      - reference to the current form element
   // step.complete  - true/false - is this the last step?
@@ -117,3 +118,42 @@ formUp.next( form, function( event, step ) {
 
 })
 ```
+
+### Fieldset Navigation
+
+Here's an example of the HTML for a form with navigation
+
+```html
+<form id="some-form" class="progressive" data-nav='true'>
+
+  <fieldset class="form-step" data-nav='1. Create Account'>
+    <!-- Some inputs -->
+    <button type='submit'>Submit</button>
+  </fieldset>
+
+  <fieldset class="form-step" data-nav='2. Enter Payment'>
+    <!-- Some more inputs -->
+    <button type='submit'>Submit</button>
+  </fieldset>
+
+</form>
+```
+
+This will generate navigation with this HTML
+
+```
+<nav class='progressive-form-nav'>
+  <a href="#" data-step='1'>1. Create Account</a>
+  <a href="#" data-step='2'>2. Enter Payment</a>
+</nav>
+```
+
+Nav items will receive classes based on their state. You can use these to style them appropriately.
+
+```
+here      - The current step
+next      - All steps after the current step
+previous  - All steps before the current step
+completed - Any step which has been submitted (this includes current and next steps if a user has navigated back)
+```
+
