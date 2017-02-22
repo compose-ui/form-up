@@ -87,6 +87,8 @@ Here's what a simple progressive form may look like.
 </form>
 ```
 
+### Styling fieldsets
+
 To help with styling form steps (with transitions) these classnames are added to fieldsets to show state.
 
 ```
@@ -142,7 +144,13 @@ formUp.next( form, function( event, step ) {
 
 ### Fieldset Navigation
 
-Here's an example of the HTML for a form with navigation
+To add navigation to your progressive form, add `data-nav=true` to the form element.
+
+Note: Users cannot use the navigation to advance forward through fieldsets witout submitting the forms.
+This navigation exists to allow users to revisit any fieldset and update its information. Users can navigate to any fieldset
+which has been filled out and submitted, or navigate back to the current step.
+
+Here's an example a form with navigation
 
 ```html
 <form id="some-form" class="progressive" data-nav='true'>
@@ -160,7 +168,9 @@ Here's an example of the HTML for a form with navigation
 </form>
 ```
 
-This will generate navigation with this HTML
+Each fieldset can set the title for the navigation with the `data-nav` element.
+
+This will generate navigation with this HTML:
 
 ```
 <nav class='progressive-form-nav'>
@@ -168,6 +178,8 @@ This will generate navigation with this HTML
   <a href="#" data-step='2'>2. Enter Payment</a>
 </nav>
 ```
+
+### Styling nav items
 
 Nav items will receive classes based on their state. You can use these to style them appropriately.
 
