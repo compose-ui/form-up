@@ -87,13 +87,25 @@ Here's what a simple progressive form may look like.
 </form>
 ```
 
-To help with styling form steps (with transitions) these classnames are added to show state.
+To help with styling form steps (with transitions) these classnames are added to fieldsets to show state.
 
 ```
 active    - the current step
 enter     - When a step transitions in
 exit      - When a step is being dismissed
 completed - When a step has been filled out
+```
+
+Also `data-direction` attributes describe the direction of a transition. So you could style transitions in and out like this:
+
+```
+/* Enter animations */
+.form-step.enter[data-direction=forward] { /* enter stage right */ }
+.form-step.enter[data-direction=reverse] { /* enter stage left */ }
+
+/* Exit animations */
+.form-step.exit[data-direction=forward] { /* exit stage left */ }
+.form-step.exit[data-direction=reverse] { /* exit stage right */ }
 ```
 
 ### Handling the next event
