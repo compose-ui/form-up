@@ -1,6 +1,6 @@
 {
   "name": "compose-form-up",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "A lightweight HTML5 form validation utility",
   "main": "index.js",
   "scripts": {

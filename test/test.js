@@ -38,14 +38,17 @@ describe( 'formup', function() {
 
     it( 'tests invalid values', function() {
 
-      var input = utils.addInput( fieldsetOne, { 'data-invalid-value': 'nope@nope.com' })
+      var input = utils.addInput( fieldsetOne )
 
       setValue( input, 'nope@nope.com' )
-      isInvalid( input )
+      formUp.invalidateField( input )
+
+
       formUp.validate( form )
+      isInvalid( input )
       assert.equal( input.parentNode.textContent, "Value 'nope@nope.com' is not permitted" )
 
-      input.dataset.invalidValueMessage = 'Email address already registered'
+      formUp.invalidateField( input, 'Email address already registered' )
       formUp.validate( form )
       assert.equal( input.parentNode.textContent, "Email address already registered" )
 
