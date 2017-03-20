@@ -62,6 +62,18 @@ required="required" value="">
 - `data-invalid-value="superman"` - Superman cannot be entered.
 - `data-invalid-value-message="Invalid value: superman"` - Sets a custom error message when a value matching the `data-invalid-value` is set.
 
+Using `invalidateField` you can easily invalidate a field's current value.
+
+```js
+formUp.invalidateField( element, [message] )
+```
+
+For example if you find a usename is already taken, you could invalidate the username field like this.
+
+```js
+var username = document.querySelector( 'input[name=username]' )
+formUp.invalidateField( username, "Username: " + username.value + " is taken. ")
+```
 
 ## Progressive Forms
 
