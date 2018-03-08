@@ -5,7 +5,7 @@ var assert    = require( 'chai' ).assert,
     isInvalid = utils.isInvalid,
     setValue  = utils.setValue,
     selectOption  = utils.selectOption,
-    Event     = require( 'compose-event' )
+    Event     = require( 'compose-toolbox' ).event
 
 describe( 'formup', function() {
 
