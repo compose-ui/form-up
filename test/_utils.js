@@ -1,4 +1,3 @@
-var assert = require('chai').assert
 var toolbox = require( 'compose-toolbox' )
 var Event = toolbox.event
 
@@ -63,11 +62,11 @@ var Utils = {
   },
 
   isValid: function( input ) {
-    assert.isTrue( input.checkValidity() == true && input.parentNode.classList.contains( 'valid' ) )
+    expect( input.checkValidity() && input.parentNode.classList.contains( 'valid' )).toBeTruthy()
   },
 
   isInvalid: function( input ) {
-    assert.isTrue( input.checkValidity() == false && input.parentNode.classList.contains( 'invalid' ) )
+    expect( !input.checkValidity() && input.parentNode.classList.contains( 'invalid' ) ).toBeTruthy()
   }
 }
 

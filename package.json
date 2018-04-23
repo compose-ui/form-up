@@ -4,7 +4,7 @@
   "description": "A lightweight HTML5 form validation utility",
   "main": "index.js",
   "scripts": {
-    "test": "mochify --reporter spec"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -23,10 +23,13 @@
   },
   "homepage": "https://github.com/compose-ui/form-up#readme",
   "dependencies": {
-    "compose-toolbox": "^1.0.0"
+    "compose-toolbox": "^1.5.0"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
-    "mochify": "^2.18.1"
+    "browserify": "^16.2.0",
+    "http-server": "^0.11.1",
+    "jest": "^22.4",
+    "jest-puppeteer": "^2.3.0",
+    "puppeteer": "^1.0.0"
   }
 }
