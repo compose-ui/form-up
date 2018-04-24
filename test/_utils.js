@@ -1,73 +1,37 @@
-var toolbox = require( 'compose-toolbox' )
-var Event = toolbox.event
-
-// Utlitiy function for easily appending to HTML
-var Utils = {
-
-  injectHTML: function( el, html ) {
-
-    el.insertAdjacentHTML( 'beforeend', html )
-
-    return el.lastChild
+module.exports = u = {
+  validate: async () => {
+    await page.evaluate("FormUp.validate(document.querySelector('form'))")
   },
 
-  container: function() {
-    var div = document.querySelector('.container')
-
-    if ( !div ){
-      div = Utils.injectHTML( document.body, '<div class="container"></div>' )
-    } else {
-      div.innerHTML = ''
-    }
-    return div
+  type: async (selector, data) => {
+    await expect(page).toFill(selector, data)
+    await page.evaluate("FormUp.validate(document.querySelector('form'))")
+    await u.validate()
   },
 
-  addInput: function( form, options, tag ) {
-
-    options = options || {}
-    tag = tag || '<input type="text">'
-
-    defaults = {
-      required: true,
-    }
-
-    var label = Utils.injectHTML( form, '<label></label>' )
-    var input = Utils.injectHTML( label, tag )
-
-    for ( var attr in defaults ) { input.setAttribute( attr, defaults[attr] ) }
-    for ( var attr in options ) { input.setAttribute( attr, options[attr] ) }
-
-    return input
+  select: async (selector, option) => {
+    await expect(page).toSelect(selector, option)
+    await u.validate()
   },
 
-  submit: function( form ) {
-    Event.fire( form.querySelector('[type=submit]'), 'click' )
+  invalidateField: async (selector, text) => {
+    await page.evaluate(`FormUp.invalidateField( document.querySelector('${selector}'), '${text}')`)
+    await u.validate()
   },
 
-  setValue: function( input, value ) {
-    input.setAttribute( 'value', value )
-    input.value = value
-    Event.fire( input, 'blur' )
+  isValid: async (selector) => {
+    await expect(page).toMatchElement(`${selector}.valid`)
   },
 
-  selectOption: function( select, index ) {
-    select.selectedIndex = index
-
-    // Shabby test code justification: It's really hard to trigger events in tests, so this
-    // short circuits the system. It's not ideal but for now
-    // it'll do.
-    select.parentNode.classList.toggle( 'invalid', !select.checkValidity() )
-    select.parentNode.classList.toggle( 'valid', select.checkValidity() )
-
+  isInvalid: async (selector) => {
+    await expect(page).toMatchElement(`${selector}.invalid`)
   },
 
-  isValid: function( input ) {
-    expect( input.checkValidity() && input.parentNode.classList.contains( 'valid' )).toBeTruthy()
+  find: async (needle) => {
+    await expect(page).toMatch(needle)
   },
 
-  isInvalid: function( input ) {
-    expect( !input.checkValidity() && input.parentNode.classList.contains( 'invalid' ) ).toBeTruthy()
+  click: async (selector, options) => {
+    expect(page).toClick(selector, options)
   }
 }
-
-module.exports = Utils
