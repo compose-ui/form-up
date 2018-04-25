@@ -24,7 +24,11 @@ module.exports = u = {
   },
 
   isInvalid: async (selector) => {
-    await expect(page).toMatchElement(`${selector}.invalid`)
+    await u.findElement(`${selector}.invalid`)
+  },
+
+  findElement: async (selector, options) => {
+    await expect(page).toMatchElement(`${selector}`, options)
   },
 
   find: async (needle) => {
@@ -32,6 +36,6 @@ module.exports = u = {
   },
 
   click: async (selector, options) => {
-    expect(page).toClick(selector, options)
+    await expect(page).toClick(selector, options)
   }
 }
