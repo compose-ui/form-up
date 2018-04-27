@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/compose-ui/form-up#readme",
   "dependencies": {
-    "compose-toolbox": "^1.5.0"
+    "compose-toolbox": "^1.6.0"
   },
   "devDependencies": {
     "browserify": "^16.2.0",

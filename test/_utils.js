@@ -31,11 +31,23 @@ module.exports = u = {
     await expect(page).toMatchElement(`${selector}`, options)
   },
 
-  find: async (needle) => {
-    await expect(page).toMatch(needle)
+  find: async (text) => {
+    await expect(page).toMatch(text)
   },
 
   click: async (selector, options) => {
     await expect(page).toClick(selector, options)
+  },
+
+  html: async (selector) => {
+    return await page.$eval(selector, e => e.outerHTML);
+  },
+
+  matchText: async (selector, text) => {
+    return expect( await u.text(selector)).toBe(text)
+  },
+
+  text: async (selector) => {
+    return await page.$eval(selector, e => e.textContent);
   }
 }
