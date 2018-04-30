@@ -59,8 +59,8 @@ required="required" value="">
 
 - `data-max-words="3"` - Ensure no more than 3 words are entered.
 - `data-min-words="3"` - Ensure at least 3 words are entered.
-- `data-before="YYYY-MM-DD HH:MM:SS Z"` - Ensure that a date string occurs before a certian date.
-- `data-after="YYYY-MM-DD HH:MM:SS Z"` - Ensure that a date string occurs after a certian date.
+- `data-before-time="YYYY-MM-DD HH:MM:SS Z"` - Ensure that a date string occurs before a certian date.
+- `data-after-time="YYYY-MM-DD HH:MM:SS Z"` - Ensure that a date string occurs after a certian date.
 - `data-zone="utc-5"` - Select a timezone for parsing date strings, defaults to UTC.
 - `data-invalid-value="superman"` - Superman cannot be entered.
 - `data-invalid-value-message="Invalid value: superman"` - Sets a custom error message when a value matching the `data-invalid-value` is set.
