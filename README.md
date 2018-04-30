@@ -61,6 +61,7 @@ required="required" value="">
 - `data-min-words="3"` - Ensure at least 3 words are entered.
 - `data-before-time="YYYY-MM-DD HH:MM:SS Z"` - Ensure that a date string occurs before a certian date.
 - `data-after-time="YYYY-MM-DD HH:MM:SS Z"` - Ensure that a date string occurs after a certian date.
+- `data-validate-time="true"` - Ensure that input is a valid date string.
 - `data-zone="utc-5"` - Select a timezone for parsing date strings, defaults to UTC.
 - `data-invalid-value="superman"` - Superman cannot be entered.
 - `data-invalid-value-message="Invalid value: superman"` - Sets a custom error message when a value matching the `data-invalid-value` is set.
