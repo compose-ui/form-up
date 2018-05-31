@@ -5,7 +5,7 @@ module.exports = u = {
 
   type: async (selector, data) => {
     await expect(page).toFill(selector, data)
-    await page.evaluate("FormUp.validate(document.querySelector('form'))")
+    //await page.evaluate("FormUp.validate(document.querySelector('form'))")
     await u.validate()
   },
 
@@ -49,5 +49,16 @@ module.exports = u = {
 
   text: async (selector) => {
     return await page.$eval(selector, e => e.textContent);
+  },
+
+  isNull: async (selector) => {
+    return expect( await page.$(selector)).toBe(null)
+  },
+
+  enableLogging: ()=> {
+    page.on('console', msg => {
+      for (let i = 0; i < msg.args().length; ++i)
+        console.log(`${msg.args()[i]}`)
+    });
   }
 }
