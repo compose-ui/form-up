@@ -1,6 +1,6 @@
 <script src="/index.build.js"></script>
 
-<form>
+<form data-diff-target='#form-diff'>
   <label for='input-1'> First input
     <input id='input-1' type="text" value='initial value'>
   </label>
@@ -24,3 +24,10 @@
 
   <label><input id='checkbox' type='checkbox' name='check-test'> Checkbox</label>
 </form>
+
+<div id="form-diff-container">
+  <h2>Form diff title</h2>
+  <div class='some-wrapper'>
+    <div id='form-diff' data-hide-when-empty='#form-diff-container'></div>
+  </div>
+</div>
