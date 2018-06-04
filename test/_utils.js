@@ -55,10 +55,15 @@ module.exports = u = {
     return expect( await page.$(selector)).toBe(null)
   },
 
+  wait: async ( time ) => {
+    return await page.keyboard.press( 'ShiftLeft', { delay: time } )
+  },
+
   enableLogging: ()=> {
     page.on('console', msg => {
       for (let i = 0; i < msg.args().length; ++i)
         console.log(`${msg.args()[i]}`)
     });
   }
+
 }
