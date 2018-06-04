@@ -74,5 +74,18 @@ describe( 'Progressive form', () => {
     await u.isNull( '#checkbox.changed-value' )
   })
 
-  //TODO: test multiple inputs under a single label
+  it( 'works with multiple inputs under one label', async () => {
+    await u.isNull( '#multi-input.input-changed-value' )
+
+    await expect( page ).toFill( '#multi-input-1', 'some change' )
+    await u.findElement( '#multi-input.input-changed-value' )
+
+    await expect( page ).toSelect( '#multi-input-2', '1' )
+    await expect( page ).toFill( '#multi-input-1', 'initial value' )
+
+    await u.findElement( '#multi-input.input-changed-value' )
+    await expect( page ).toSelect( '#multi-input-2', '0' )
+
+    await u.isNull( '#multi-input.input-changed-value' )
+  })
 })
