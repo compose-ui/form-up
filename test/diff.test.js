@@ -12,10 +12,21 @@ describe( 'Progressive form', () => {
     )
   })
 
-  it( 'does something', async () => {
+  it( 'assigns data-form-diff-id to inputs', async () => {
     await expect( page ).toFill( '#input-1', 'another value' )
-    await u.findElement( '.changed-value', { value: 'another value' } )
-    //console.log( await u.html( '#form-diff' ) )
+    await u.findElement( '[data-form-diff-id]' )
   })
+
+  it( 'can find elements with data-form-diff-id', async () => {
+    var resetSelector = await u.data( '[data-reset-input]', 'resetInput' )
+    await u.findElement( resetSelector )
+  })
+
+  // TODO: Reset an input from the form diff
+  // TODO: Verify initial and new values are correct
+  // TODO: Check values for multiple inputs under a label
+  // TODO: Check values for radios
+  // TODO: Check values for select
+  // TODO: Check values for range (from Tungsten sliders)
 
 })

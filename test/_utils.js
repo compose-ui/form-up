@@ -59,6 +59,10 @@ module.exports = u = {
     return await page.keyboard.press( 'ShiftLeft', { delay: time } )
   },
 
+  data: async (selector, object) => {
+    return await page.$eval(selector, (e, object) => e.dataset[object], object);
+  },
+
   enableLogging: ()=> {
     page.on('console', msg => {
       for (let i = 0; i < msg.args().length; ++i)

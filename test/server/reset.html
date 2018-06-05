@@ -1,26 +1,38 @@
 <script src="/index.build.js"></script>
 
 <form data-diff-target='#form-diff'>
-  <label for='input-1'> First input
+  <label for='input-1' data-default='default value'> First input
     <input id='input-1' type="text" value='initial value'>
   </label>
 
-  <select id='input-2'>
+  <select id='input-2' data-default='1'>
     <option value='0' selected='true'>First</option>
     <option value='1'>Second</option>
   </select>
 
   <label id='multi-input'> First input
-    <input id='multi-input-1' type="text" value='initial value'>
+    <input id='multi-input-1' type="text" value='initial value' data-default='defaulted value'>
     <select id='multi-input-2'>
       <option value='0' selected='true'>First</option>
       <option value='1'>Second</option>
     </select>
   </label>
 
+  <div id='radios'>
+    <label><input id='radio-1' type='radio' name='radio-test' value='1' checked> Radio 1</label>
+    <label><input id='radio-2' type='radio' name='radio-test' value='2'> Radio 2</label>
+    <label><input id='radio-3' type='radio' name='radio-test' value='3' data-default='checked'> Radio 3</label>
+  <div>
+
   <a class='reset-1' href="#" data-reset-input='#input-1'>reset input 1</a>
   <a class='reset-2' href="#" data-reset-input='#input-2'>reset input 2</a>
   <a class='reset-3' href="#" data-reset-input='#multi-input-1, #multi-input-2'>reset input 3</a>
+
+  <a id='default-1' href="#" data-restore-default='#input-1'>default input 1</a>
+  <a id='default-2' href="#" data-restore-default='#input-2'>default input 1</a>
+  <a id='default-3' href="#" data-restore-default='[name=radio-test]'>default radio inputs</a>
+  <a id='default-4' href="#" data-restore-default='#radios'>default radio inputs</a>
+  <a id='default-5' href="#" data-restore-default='form'>default whole form</a>
 
   <input type='reset'>
 </form>
