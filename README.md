@@ -188,7 +188,7 @@ Each fieldset can set the title for the navigation with the `data-nav` element.
 
 This will generate navigation with this HTML:
 
-```
+```html
 <nav class='progressive-form-nav'>
   <a href="#" data-step='1'>1. Create Account</a>
   <a href="#" data-step='2'>2. Enter Payment</a>
@@ -205,4 +205,92 @@ next      - All steps after the current step
 previous  - All steps before the current step
 completed - Any step which has been submitted (this includes current and next steps if a user has navigated back)
 ```
+
+## Form Diff
+
+Add a `data-diff-target='#selector'` to your `<form>` element to have formUp automatically generate a form diff whenever input values
+are changed in your form. Here's some example html.
+
+```html
+<form data-diff-target='#form-diff'>…<form>
+
+<div id='form-diff'></div>
+```
+
+When an input is changed, a table is created with changed form input values like this.
+
+|-------------|---------------|----|---------------|-----|
+| input label | initial value | -> | current value | (x) |
+
+Users can click the `(x)` button to reset the input to its initial value.
+
+- hide when empty
+- diff note
+- diff class
+
+#### Set a custom form diff description
+- `data-description="These changes will be applied when you submit this form."`
+
+## Input Changes
+
+FormUp tracks input changes and makes it easy to track which inputs in a form have changed. Inputs which have been changed from their
+initial value (at page load) will receive a `changed-value` class. Their corresponding label (if any) will receive an
+`input-changed-value` class.
+
+## Reset forms and inputs
+
+### Reset input to initial value
+
+When a page is loaded, form elements store their initial value as a `data-initial-value` property.
+
+```html
+<a href='#' data-reset-input='#your-name'>Reset Name</a>
+```
+
+An element with a `data-reset-input='#selector'` will reset an input to its initial value when clicked. 
+
+### Restore inputs to default value
+
+If you have an input which has some natural default state, you can track that by adding a `data-default='default value'` property.
+
+```html
+<a href='#' data-restore-default='#config-input'>Reset config to default</a>
+```
+
+An element with a `data-restore-default='#selector'` will reset an input to its default value when clicked. 
+
+
+### Resetting an entire form
+
+When a form is reset using an `<input type='reset'>` button, typically no events fire on the inputs. If you're tracking changes to
+inputs, this can be a problem. Using FormUp will cause `input` events to fire on each input which has been changed whenever a form is
+reset.
+
+## Get label
+
+This is a utility function for making it simple to get a reference to the label that corresponds to an input.
+
+```javascript
+// Returns a DOM reference to a label (if it can find one)
+formUp.getLabel( input ) // accepts a DOM reference or selector
+```
+
+To get the label, `getLabel` looks at:
+
+- DOM heirarchy (is the input inside a label element)
+- Queries for `[for="input.id"]` to find labels linked by the `for` property.
+
+
+If you wan to get a text label to describe an input, use `getLabel.text( input )`
+
+```javascript
+formUp.getLabel.text( input ) // accepts a DOM reference or selector
+```
+
+This returns text from the:
+
+- label's text (found by `getLabel`)
+- Value from the `aria-label` property
+- Combines text from elements matched by the `aria-labelledby` selector
+- or uses the input `name` property if it cannot find a label
 
