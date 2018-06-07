@@ -59,16 +59,17 @@ describe( 'Form reset', () => {
 describe( 'Restore default', () => {
   it( 'restores default for a text input', async () => {
     await expect( page ).toFill( '#input-1', 'another value' )
+    await u.matchValue( '#input-1', 'another value' )
     await u.click( '#default-1' )
 
-    await u.findElement( '#input-1', { value: 'default value' } )
+    await u.matchValue( '#input-1', 'default value' )
   })
 
   it( 'restores default for a select', async () => {
     await expect( page ).toSelect( '#input-2', '0' )
     await u.click( '#default-2' )
 
-    await u.findElement( '#input-2', { value: '1' } )
+    await u.matchValue( '#input-2', '1' )
   })
 
   it( 'restores default for a radio input', async () => {
