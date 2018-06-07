@@ -1,0 +1,38 @@
+<script src="/index.build.js"></script>
+
+<form data-diff-target='#form-diff'>
+  <label for='input-1'> First input
+    <input id='input-1' name='input-1' type="text" value='initial value'>
+  </label>
+
+  <label for='input-2'>Diff note test</label>
+  <input id='input-2' name='input-2' type="text" data-diff-note='(Beware the Kraken!)' data-diff-class='kraken'>
+
+  <select id='select-input' name='select-input' aria-label='Favorite breakfast bread'>
+    <option value=''>Select an option</option>
+    <option value='0'>Bagel</option>
+    <option value='1'>Toast</option>
+  </select>
+
+  <label for="text-area">Type stuff</label>
+  <textarea id="text-area" name='text-area'>
+    " 'this 'is in here< asdf& ;asdf> "
+  </textarea>
+
+  <h4 id='radio-label'>Select a radio</h4>
+
+  <label><input id='checkbox' type='checkbox' name='check-test'> Ice cream?</label>
+
+  <label id='multi-input'>
+    <span id="multi-input-label">Select Size</span>
+    <input id='multi-input-1' type="text" value='100' name='multi-input-1' aria-labelledby="multi-input-label">
+    <select id='multi-input-2' name='multi-input-2' aria-labelledby="multi-input-label">
+      <option>MB</option>
+      <option>GB</option>
+    </select>
+  </label>
+
+  <label class="range-label fill standard-label input-changed" data-input-type="range"><span class="label-text"><span id="input-d606cdaa4e4545dc-label">Rate our service</span></span><span class="input-wrapper"><div class="slider-container with-label" id="slider6" data-slider-state="increased"><div class="slider-input-container"><input id='range-input' name='range-input' class="input slider-input input-changed" type="range" max="4" value="2" aria-labelledby="input-d606cdaa4e4545dc-label" data-unique-id="input-d606cdaa4e4545dc" data-input="range_input" data-values="poor,fair,good,great,awesome" data-mark="3" data-id="6" data-initial-value="2" min="0" data-com.agilebits.onepassword.user-edited="yes"><div class="slider-track"><div class="slider-segment filled"><span class="slider-segment-content"></span></div><div class="slider-segment filled"><span class="slider-segment-content"></span></div><div class="slider-segment filled"><span class="slider-segment-content"><span class="slider-segment-mark" data-index="3"></span></span></div><div class="slider-segment"><span class="slider-segment-content"></span></div><div class="slider-segment"><span class="slider-segment-content"></span></div></div><div class="slider-fills"><span class="slider-fill filled" data-index="1"></span><span class="slider-fill filled" data-index="2"></span><span class="slider-fill filled" data-index="3"></span><span class="slider-fill" data-index="4"></span></div></div><div class="slider-label align-right"><span class="slider-label-default internal-label" data-slider-label="default"><span class="label-content">great</span></span> </div><input class="range_input" type="hidden" name="range_input" value="great"></div></span></label>
+</form>
+
+<div id='form-diff'></div>

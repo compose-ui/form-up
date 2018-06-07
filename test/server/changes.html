@@ -2,19 +2,19 @@
 
 <form data-diff-target='#form-diff'>
   <label for='input-1'> First input
-    <input id='input-1' type="text" value='initial value'>
+    <input id='input-1' name='input-1' type="text" value='initial value'>
   </label>
 
   <label for='input-2'>Second input</label>
-  <input id='input-2' type="number">
+  <input id='input-2' name='input-2' type="number">
 
-  <select id='select-input'>
+  <select id='select-input' name='select-input'>
     <option value='0'>First</option>
     <option value='1'>Second</option>
   </select>
 
   <label for="text-area">Type stuff</label>
-  <textarea id="text-area">
+  <textarea id="text-area" name='text-area'>
     " 'this 'is in here< asdf& ;asdf> "
   </textarea>
 
@@ -26,8 +26,8 @@
 
 
   <label id='multi-input'> First input
-    <input id='multi-input-1' type="text" value='initial value'>
-    <select id='multi-input-2'>
+    <input id='multi-input-1' type="text" value='initial value' name='multi-input-1'>
+    <select id='multi-input-2' name='multi-input-2'>
       <option value='0'>First</option>
       <option value='1'>Second</option>
     </select>

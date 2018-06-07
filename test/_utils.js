@@ -47,8 +47,16 @@ module.exports = u = {
     return expect( await u.text(selector)).toBe(text)
   },
 
+  matchValue: async (selector, val) => {
+    return expect( await u.value(selector)).toBe(val)
+  },
+
   text: async (selector) => {
     return await page.$eval(selector, e => e.textContent);
+  },
+
+  value: async (selector) => {
+    return await page.$eval(selector, e => e.value);
   },
 
   isNull: async (selector) => {
@@ -60,7 +68,16 @@ module.exports = u = {
   },
 
   data: async (selector, object) => {
-    return await page.$eval(selector, (e, object) => e.dataset[object], object);
+    if ( object ) {
+      return await page.$eval(selector, (e) => e.dataset[object], object);
+    } else {
+      return JSON.parse( await page.$eval(selector, (e) => JSON.stringify(e.dataset)) );
+    }
+  },
+
+  setValue: async (selector, value) => {
+    await page.evaluate(`document.querySelector('${selector}').value = '${value}'`)
+    await page.evaluate(`var input = document.querySelector('${selector}'); FormUp.event.fire(input, 'input')`)
   },
 
   enableLogging: ()=> {
