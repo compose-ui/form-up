@@ -224,12 +224,99 @@ When an input is changed, a table is created with changed form input values like
 
 Users can click the `(x)` button to reset the input to its initial value.
 
-- hide when empty
-- diff note
-- diff class
+The input label is derived based on the first successful attempt from these conditions:
 
-#### Set a custom form diff description
-- `data-description="These changes will be applied when you submit this form."`
+- The value of an input's `aria-label` property
+- The combined `textContent` of any elements referenced by the input's `aria-labelledby` property.
+- `textContent` from a `<label>` element which wraps the input.
+- A `<label>` element which points to the input's id using its `for` attribute.
+- The value of an input's `placeholder` attribute.
+- The value of an input's `name` attribute.
+
+#### Examples of how you might label your input.
+
+```html
+<!-- Input label will be "Your Comment" -->
+<textarea aria-label="Your Comment" …></textarea>
+```
+
+```html
+<!-- Input label will be "Street Address" -->
+<h3 id="address-title">Address</h3>
+
+<div>
+  <label id="street-label">Street</label>
+  <input aria-labelledby="street-label address-title" …>
+</div>
+```
+
+```html
+<!-- Input label will be "Your Name" -->
+<label>
+  <span>Your Name</span>
+  <input …>
+</label>
+```
+
+```html
+<!-- Input label will be "Your Name" -->
+<label for="name">Your Name</label>
+<input id="name" …>
+```
+
+```html
+<!-- Input label will be "Postal code" -->
+<input placeholder="Postal code" …>
+```
+
+### Diff note
+
+Add `diff-note="Your message"` to an input to display a note by its diff. For example:
+
+```html
+<input name='address' diff-note='( affects shipping estimate )'…>
+```
+
+This will add a note next to the input's label in the diff table.
+
+|-------------|---------------|----|---------------|-----|
+| address ( affects shipping estimate ) | initial value | -> | current value | (x) |
+
+This will create a `<span class='diff-note'>` element inside the label.
+
+
+### Diff class
+
+Add `diff-class="some-classname"` to an input to add a classname to the table row for that input's diff.
+
+```html
+<input name='enabled' type='checkbox' diff-class='destructive-change'…>
+```
+
+This will add a `.destructive-change` class name to the `tr.input-diff` element.
+
+### Hide when empty
+
+It may be helpful to hide some elements when a diff table is empty. Add a `data-hide-when-empty='#selector'` attribute to your
+form-diff target to hide other elements when the form-diff is empty.
+
+Here's an example:
+
+```html
+
+<form data-diff-target='#form-diff'>–</form>
+
+<div id='diff-summary'> <!-- This element will be hidden when the diff is empty -->
+
+  <h3>Form Summary</h3>
+  <p>These changes will be applied when you submit this form.</p>
+
+  <div id='form-diff' data-hide-when-empty='#diff-summary'></div> <!-- This is where the diff table will be inserted -->
+</div>
+```
+
+This adds a `.form-diff-empty` classname to elements matched by the selector in `data-hide-when-empty`. A `<style>` tag is added to
+the head to be sure that classname will hide elements.
 
 ## Input Changes
 

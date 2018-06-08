@@ -4,7 +4,7 @@ const log = function(a){
   console.log(a)
 }
 
-describe( 'Progressive form', () => {
+describe( 'Form diff', () => {
   beforeAll( async () => {
     await page.goto( "http://localhost:8081/diff.html" )
 
@@ -29,15 +29,26 @@ describe( 'Progressive form', () => {
     await u.findElement( '.input-diff-label', { text: 'First input' })
     await u.findElement( '.input-diff-initial', { text: 'initial value' })
     await u.findElement( '.input-diff-value', { text: 'new value' })
-
   })
 
-  it( 'can reset an input from the reset button', async () => {
+  it( 'can reset an input from the reset button and hides when empty', async () => {
     await expect( page ).toFill( '#input-1', 'some value' )
     await u.matchValue( '#input-1', 'some value' )
 
+    await u.wait(110)
+
     await u.click('[data-diff-name*=input-1] button')
     await u.matchValue( '#input-1', 'initial value' )
+    
+    // Adds a style tag to hide form diff elements
+    await u.findElement( 'style#hide-form-diff' )
+
+    // Hides form-diff and related elements
+    await u.findElement( '#form-diff.form-diff-empty' )
+    await u.findElement( '#diff-title.form-diff-empty' )
+
+    // Form diff is empty
+    await u.isNull( '#form-diff *:first-child' )
   })
 
   it( 'shows multiple values under a single label', async () => {
