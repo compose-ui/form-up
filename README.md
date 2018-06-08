@@ -188,7 +188,7 @@ Each fieldset can set the title for the navigation with the `data-nav` element.
 
 This will generate navigation with this HTML:
 
-```
+```html
 <nav class='progressive-form-nav'>
   <a href="#" data-step='1'>1. Create Account</a>
   <a href="#" data-step='2'>2. Enter Payment</a>
@@ -205,4 +205,184 @@ next      - All steps after the current step
 previous  - All steps before the current step
 completed - Any step which has been submitted (this includes current and next steps if a user has navigated back)
 ```
+
+## Form Diff
+
+First, to enable form-diff run `formUp.diff.watch()` to watch for changes to forms. Then add a `data-diff-target='#selector'` to your `<form>` element to have formUp automatically generate a form diff whenever input values
+are changed in your form. Here's some example html.
+
+```html
+<form data-diff-target='#form-diff'>…<form>
+
+<div id='form-diff'></div>
+```
+
+When an input is changed, a table is created with changed form input values like this.
+
+|-------------|---------------|----|---------------|-----|
+| input label | initial value | -> | current value | (x) |
+
+Users can click the `(x)` button to reset the input to its initial value.
+
+The input label is derived based on the first successful attempt from these conditions:
+
+- The value of an input's `aria-label` property
+- The combined `textContent` of any elements referenced by the input's `aria-labelledby` property.
+- `textContent` from a `<label>` element which wraps the input.
+- A `<label>` element which points to the input's id using its `for` attribute.
+- The value of an input's `placeholder` attribute.
+- The value of an input's `name` attribute.
+
+#### Examples of how you might label your input.
+
+```html
+<!-- Input label will be "Your Comment" -->
+<textarea aria-label="Your Comment" …></textarea>
+```
+
+```html
+<!-- Input label will be "Street Address" -->
+<h3 id="address-title">Address</h3>
+
+<div>
+  <label id="street-label">Street</label>
+  <input aria-labelledby="street-label address-title" …>
+</div>
+```
+
+```html
+<!-- Input label will be "Your Name" -->
+<label>
+  <span>Your Name</span>
+  <input …>
+</label>
+```
+
+```html
+<!-- Input label will be "Your Name" -->
+<label for="name">Your Name</label>
+<input id="name" …>
+```
+
+```html
+<!-- Input label will be "Postal code" -->
+<input placeholder="Postal code" …>
+```
+
+```html
+<!-- Input label will be "street_address" -->
+<input name="street_address" …>
+```
+
+### Diff note
+
+Add `diff-note="Your message"` to an input to display a note by its diff. For example:
+
+```html
+<input name='address' diff-note='( affects shipping estimate )'…>
+```
+
+This will add a note next to the input's label in the diff table.
+
+|-------------|---------------|----|---------------|-----|
+| address ( affects shipping estimate ) | initial value | -> | current value | (x) |
+
+This will create a `<span class='diff-note'>` element inside the label.
+
+
+### Diff class
+
+Add `diff-class="some-classname"` to an input to add a classname to the table row for that input's diff.
+
+```html
+<input name='enabled' type='checkbox' diff-class='destructive-change'…>
+```
+
+This will add a `.destructive-change` class name to the `tr.input-diff` element.
+
+### Hide when empty
+
+It may be helpful to hide some elements when a diff table is empty. Add a `data-hide-when-empty='#selector'` attribute to your
+form-diff target to hide other elements when the form-diff is empty.
+
+Here's an example:
+
+```html
+
+<form data-diff-target='#form-diff'>–</form>
+
+<div id='diff-summary'> <!-- This element will be hidden when the diff is empty -->
+
+  <h3>Form Summary</h3>
+  <p>These changes will be applied when you submit this form.</p>
+
+  <div id='form-diff' data-hide-when-empty='#diff-summary'></div> <!-- This is where the diff table will be inserted -->
+</div>
+```
+
+This adds a `.form-diff-empty` classname to elements matched by the selector in `data-hide-when-empty`. A `<style>` tag is added to
+the head to be sure that classname will hide elements.
+
+## Input Changes
+
+FormUp tracks input changes and makes it easy to track which inputs in a form have changed. Inputs which have been changed from their
+initial value (at page load) will receive a `changed-value` class. Their corresponding label (if any) will receive an
+`input-changed-value` class.
+
+## Reset forms and inputs
+
+### Reset input to initial value
+
+When a page is loaded, form elements store their initial value as a `data-initial-value` property.
+
+```html
+<a href='#' data-reset-input='#your-name'>Reset Name</a>
+```
+
+An element with a `data-reset-input='#selector'` will reset an input to its initial value when clicked. 
+
+### Restore inputs to default value
+
+If you have an input which has some natural default state, you can track that by adding a `data-default='default value'` property.
+
+```html
+<a href='#' data-restore-default='#config-input'>Reset config to default</a>
+```
+
+An element with a `data-restore-default='#selector'` will reset an input to its default value when clicked. 
+
+
+### Resetting an entire form
+
+When a form is reset using an `<input type='reset'>` button, typically no events fire on the inputs. If you're tracking changes to
+inputs, this can be a problem. Using FormUp will cause `input` events to fire on each input which has been changed whenever a form is
+reset.
+
+## Get label
+
+This is a utility function for making it simple to get a reference to the label that corresponds to an input.
+
+```javascript
+// Returns a DOM reference to a label (if it can find one)
+formUp.getLabel( input ) // accepts a DOM reference or selector
+```
+
+To get the label, `getLabel` looks at:
+
+- DOM heirarchy (is the input inside a label element)
+- Queries for `[for="input.id"]` to find labels linked by the `for` property.
+
+If you wan to get a text label to describe an input, use `getLabel.text( input )`
+
+```javascript
+formUp.getLabel.text( input ) // accepts a DOM reference or selector
+```
+
+This returns text from the:
+
+- The value of an input's `aria-label` property
+- The combined `textContent` of any elements referenced by the input's `aria-labelledby` property.
+- `textContent` from a `<label>` element which wraps the input.
+- A `<label>` element which points to the input's id using its `for` attribute.
+- The value of an input's `placeholder` attribute.
 

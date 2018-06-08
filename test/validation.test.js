@@ -1,6 +1,6 @@
 var u = require('./_utils.js')
 
-describe('Local', () => {
+describe('Validation', () => {
   beforeAll(async () => {
     await page.goto("http://localhost:8081/validation.html")
   })

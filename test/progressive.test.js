@@ -1,11 +1,11 @@
 var u = require('./_utils.js')
 
-describe('Local', () => {
+describe('Progressive form', () => {
   beforeAll(async () => {
     await page.goto("http://localhost:8081/progressive.html")
   })
 
-  it('Generates form navigation', async () => {
+  it('generates form navigation', async () => {
     await u.findElement('.progressive-form-nav')
   })
 

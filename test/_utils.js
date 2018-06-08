@@ -5,7 +5,7 @@ module.exports = u = {
 
   type: async (selector, data) => {
     await expect(page).toFill(selector, data)
-    await page.evaluate("FormUp.validate(document.querySelector('form'))")
+    //await page.evaluate("FormUp.validate(document.querySelector('form'))")
     await u.validate()
   },
 
@@ -47,7 +47,44 @@ module.exports = u = {
     return expect( await u.text(selector)).toBe(text)
   },
 
+  matchValue: async (selector, val) => {
+    return expect( await u.value(selector)).toBe(val)
+  },
+
   text: async (selector) => {
     return await page.$eval(selector, e => e.textContent);
+  },
+
+  value: async (selector) => {
+    return await page.$eval(selector, e => e.value);
+  },
+
+  isNull: async (selector) => {
+    return expect( await page.$(selector)).toBe(null)
+  },
+
+  wait: async ( time ) => {
+    return await page.keyboard.press( 'ShiftLeft', { delay: time } )
+  },
+
+  data: async (selector, object) => {
+    if ( object ) {
+      return await page.$eval(selector, (e) => e.dataset[object], object);
+    } else {
+      return JSON.parse( await page.$eval(selector, (e) => JSON.stringify(e.dataset)) );
+    }
+  },
+
+  setValue: async (selector, value) => {
+    await page.evaluate(`document.querySelector('${selector}').value = '${value}'`)
+    await page.evaluate(`var input = document.querySelector('${selector}'); FormUp.event.fire(input, 'input')`)
+  },
+
+  enableLogging: ()=> {
+    page.on('console', msg => {
+      for (let i = 0; i < msg.args().length; ++i)
+        console.log(`${msg.args()[i]}`)
+    });
   }
+
 }
