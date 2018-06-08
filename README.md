@@ -208,7 +208,7 @@ completed - Any step which has been submitted (this includes current and next st
 
 ## Form Diff
 
-Add a `data-diff-target='#selector'` to your `<form>` element to have formUp automatically generate a form diff whenever input values
+First, to enable form-diff run `formUp.diff.watch()` to watch for changes to forms. Then add a `data-diff-target='#selector'` to your `<form>` element to have formUp automatically generate a form diff whenever input values
 are changed in your form. Here's some example html.
 
 ```html
@@ -267,6 +267,11 @@ The input label is derived based on the first successful attempt from these cond
 ```html
 <!-- Input label will be "Postal code" -->
 <input placeholder="Postal code" …>
+```
+
+```html
+<!-- Input label will be "street_address" -->
+<input name="street_address" …>
 ```
 
 ### Diff note
@@ -367,7 +372,6 @@ To get the label, `getLabel` looks at:
 - DOM heirarchy (is the input inside a label element)
 - Queries for `[for="input.id"]` to find labels linked by the `for` property.
 
-
 If you wan to get a text label to describe an input, use `getLabel.text( input )`
 
 ```javascript
@@ -376,8 +380,9 @@ formUp.getLabel.text( input ) // accepts a DOM reference or selector
 
 This returns text from the:
 
-- label's text (found by `getLabel`)
-- Value from the `aria-label` property
-- Combines text from elements matched by the `aria-labelledby` selector
-- or uses the input `name` property if it cannot find a label
+- The value of an input's `aria-label` property
+- The combined `textContent` of any elements referenced by the input's `aria-labelledby` property.
+- `textContent` from a `<label>` element which wraps the input.
+- A `<label>` element which points to the input's id using its `for` attribute.
+- The value of an input's `placeholder` attribute.
 
