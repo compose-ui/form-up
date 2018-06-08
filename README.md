@@ -219,8 +219,9 @@ are changed in your form. Here's some example html.
 
 When an input is changed, a table is created with changed form input values like this.
 
-|-------------|---------------|----|---------------|-----|
-| input label | initial value | -> | current value | (x) |
+| input label | initial value | | current value | reset |
+|:------------|:--------------|:--:|:--------------|:---:|
+| Name | Bob | -> | Robert | (x) |
 
 Users can click the `(x)` button to reset the input to its initial value.
 
@@ -279,13 +280,14 @@ The input label is derived based on the first successful attempt from these cond
 Add `diff-note="Your message"` to an input to display a note by its diff. For example:
 
 ```html
-<input name='address' diff-note='( affects shipping estimate )'…>
+<input name='zipcode' diff-note='( affects shipping estimate )'…>
 ```
 
 This will add a note next to the input's label in the diff table.
 
-|-------------|---------------|----|---------------|-----|
-| address ( affects shipping estimate ) | initial value | -> | current value | (x) |
+| input label | initial value | | current value | reset |
+|:------------|:--------------|:--:|:--------------|:---:|
+| zipcode ( affects shipping estimate ) | 31249 | -> | 31281 | (x) |
 
 This will create a `<span class='diff-note'>` element inside the label.
 
