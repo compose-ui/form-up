@@ -103,4 +103,7 @@ describe( 'Restore default', () => {
     await u.findElement( '#radio-3', { checked: 'checked' } )
   })
 
+  //TODO: Restore default for all inputs under a label
+  //TODO: add a classname (briefly) for triggering an "it was defaulted" style
+  //TODO: hide empty diff on load
 })
