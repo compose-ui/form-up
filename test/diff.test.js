@@ -52,12 +52,16 @@ describe( 'Form diff', () => {
   })
 
   it( 'shows multiple values under a single label', async () => {
+    await u.click( '#reset' )
+    await u.wait(110)
 
     // Change values
     await expect( page ).toSelect( '#multi-input-2', 'GB' )
     await expect( page ).toFill( '#multi-input-1', '200' )
 
     await u.wait(110)
+
+    expect( await page.evaluate( "document.querySelectorAll( '#form-diff tr' ).length" )).toBe( 1 )
 
     // Check to be sure the diff has the correct text in it
     await u.matchText( '[data-diff-name*=multi-input-1] .input-diff-label', 'Select Size' )
@@ -121,5 +125,29 @@ describe( 'Form diff', () => {
     await u.matchText( '[data-diff-name*=range-input] .input-diff-label', 'Rate our service' )
     await u.matchText( '[data-diff-name*=range-input] .input-diff-initial', 'good' )
     await u.matchText( '[data-diff-name*=range-input] .input-diff-value', 'great' )
+  })
+
+  it( 'ignores text around the labelledby label', async() => {
+    await expect( page ).toSelect( '#select-units', 'GB' )
+    await u.wait(110)
+
+    await u.matchText( '[data-diff-name*=effective_cache_size] .input-diff-label', 'effective_cache_size' )
+  })
+
+  it( 'shows only one diff for a radio group change', async() => {
+    await u.click( '#reset' )
+    await u.wait(110)
+
+    await u.findElement( '#form-diff.form-diff-empty' )
+
+    await u.click( "#radio-2" )
+    await u.wait(130)
+
+    await u.matchText( '[data-diff-name*=radio-input] .input-diff-label', 'Select a choice' )
+    await u.matchText( '[data-diff-name*=radio-input] .input-diff-initial', 'Choice 1' )
+    await u.matchText( '[data-diff-name*=radio-input] .input-diff-value', 'Choice 2' )
+
+    expect( await page.evaluate( "document.querySelectorAll( '#form-diff tr' ).length" )).toBe( 1 )
+
   })
 })

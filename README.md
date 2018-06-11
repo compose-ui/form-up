@@ -388,3 +388,4 @@ This returns text from the:
 - A `<label>` element which points to the input's id using its `for` attribute.
 - The value of an input's `placeholder` attribute.
 
+For radio buttons grouped underneath a `<fieldset>`, you can get the text for the legend using `getLabel.legend( #some-radio-input )`.
