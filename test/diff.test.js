@@ -14,8 +14,8 @@ describe( 'Form diff', () => {
   })
 
   it( 'hides empty diff targets on load', async () => {
-    console.log( await u.html( '#diff-title') )
-    console.log( await u.html( '#form-diff' ) )
+    await u.findElement( '#diff-title[hidden]' )
+    await u.findElement( '#form-diff[hidden]' )
   })
 
   it( 'assigns data-form-diff-id to inputs', async () => {
