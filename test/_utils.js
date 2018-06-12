@@ -85,6 +85,9 @@ module.exports = u = {
       for (let i = 0; i < msg.args().length; ++i)
         console.log(`${msg.args()[i]}`)
     });
-  }
+  },
 
+  reload: async () => {
+    return await page.reload( { waitUntil: 'domcontentloaded' })
+  }
 }

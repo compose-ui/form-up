@@ -13,6 +13,11 @@ describe( 'Form diff', () => {
     )
   })
 
+  it( 'hides empty diff targets on load', async () => {
+    console.log( await u.html( '#diff-title') )
+    console.log( await u.html( '#form-diff' ) )
+  })
+
   it( 'assigns data-form-diff-id to inputs', async () => {
     await expect( page ).toFill( '#input-1', 'another value' )
     await u.findElement( '[data-form-diff-id]' )
@@ -132,8 +137,7 @@ describe( 'Form diff', () => {
   })
 
   it( 'shows only one diff for a radio group change', async() => {
-    await u.click( '#reset' )
-    await u.wait(110)
+    await u.reload()
 
     // Form diff is empty
     await u.isNull( '#form-diff *:first-child' )
