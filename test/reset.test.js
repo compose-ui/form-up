@@ -5,6 +5,7 @@ const log = function(a){
 
 beforeAll( async () => {
   await page.goto( "http://localhost:8081/reset.html" )
+  await page.setViewport({ height: 1024, width: 1024 })
 
   await page.exposeFunction( 'log', text =>
     log(text)
@@ -85,22 +86,32 @@ describe( 'Restore default', () => {
     await u.findElement( '#radio-2', { checked: 'checked' } )
     await u.click( '#default-4' )
 
-    await u.findElement( '#radio-3', { checked: 'checked' } )
+    await u.findElement( '#radio-3.defaulted-value', { checked: 'checked' } )
   })
 
   it( "restores a form's nested inputs", async () => {
     await u.click( '#radio-2' )
-    await expect( page ).toFill( '#input-1', 'another value' )
-    await expect( page ).toFill( '#multi-input-1', 'another value' )
+    await u.type( '#input-1', 'another value' )
+    await u.type( '#multi-input-1', 'another value' )
     await expect( page ).toSelect( '#input-2', '0' )
-    await u.click( '#radio-2' )
 
     await u.click( '#default-5' )
 
-    await u.findElement( '#input-1', { value: 'default value' } )
-    await u.findElement( '#input-2', { value: '1' } )
-    await expect( page ).toFill( '#multi-input-1', 'defaulted value' )
-    await u.findElement( '#radio-3', { checked: 'checked' } )
+    await u.matchValue( '#input-1.defaulted-value', 'default value' )
+    await u.matchValue( '#input-2.defaulted-value', '1' )
+    await u.matchValue( '#multi-input-1', 'defaulted value' )
+    await u.findElement( '#radio-3.defaulted-value', { checked: 'checked' } )
   })
 
+  it( "removes defaulted classnames on an input change", async () => {
+    await u.reload()
+    await u.click( '#default-1' )
+
+    await u.matchValue( '#input-1.defaulted-value', 'default value' )
+    await u.findElement( 'label[for="input-1"].input-defaulted-value' )
+
+    await u.type( '#input-1', 'another value' )
+    await u.isNull( 'label[for="input-1"].input-defaulted-value' )
+    await u.isNull( '#input-1.defaulted-value' )
+  })
 })
