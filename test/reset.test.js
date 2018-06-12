@@ -5,6 +5,7 @@ const log = function(a){
 
 beforeAll( async () => {
   await page.goto( "http://localhost:8081/reset.html" )
+  await page.setViewport({ height: 1024, width: 1024 })
 
   await page.exposeFunction( 'log', text =>
     log(text)
