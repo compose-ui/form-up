@@ -14,8 +14,9 @@ describe( 'Form diff', () => {
   })
 
   it( 'hides empty diff targets on load', async () => {
-    await u.findElement( '#diff-title[hidden]' )
-    await u.findElement( '#form-diff[hidden]' )
+    await u.findElement( '#diff-title.form-diff-hidden' )
+    await u.findElement( '#form-diff.form-diff-hidden' )
+    await u.findElement( 'style#form-diff-hidden' )
   })
 
   it( 'assigns data-form-diff-id to inputs', async () => {
@@ -46,8 +47,8 @@ describe( 'Form diff', () => {
     await u.matchValue( '#input-1', 'initial value' )
     
     // Hides form-diff and related elements
-    await u.findElement( '#form-diff[hidden]' )
-    await u.findElement( '#diff-title[hidden]' )
+    await u.findElement( '#form-diff.form-diff-hidden' )
+    await u.findElement( '#diff-title.form-diff-hidden' )
 
     // Form diff is empty
     await u.isNull( '#form-diff *:first-child' )
