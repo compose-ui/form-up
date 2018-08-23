@@ -107,9 +107,14 @@ describe( 'Form diff', () => {
 
   it( 'shows diff notes', async () => {
     await expect( page ).toFill( '#input-2', 'Banana' )
+    await expect( page ).toFill( '#multi-input-note-2', 'GB' )
     await u.wait(110)
 
+    // Use the classname from data-diff-class
     await u.matchText( '.kraken .input-diff-label .diff-note', '(Beware the Kraken!)' )
+
+    // This proves that setting the secondary input under a label shows the notes for all inputs
+    await u.matchText( '[data-diff-name*=multi-input-note-1] .diff-note', '*causes restart' )
   })
 
   it( 'adds classes and proper labels for null values', async () => {
