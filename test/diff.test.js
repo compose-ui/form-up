@@ -107,7 +107,7 @@ describe( 'Form diff', () => {
 
   it( 'shows diff notes', async () => {
     await expect( page ).toFill( '#input-2', 'Banana' )
-    await expect( page ).toFill( '#multi-input-note-2', 'GB' )
+    await expect( page ).toSelect( '#multi-input-note-2', 'GB' )
     await u.wait(110)
 
     // Use the classname from data-diff-class
