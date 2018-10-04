@@ -16,7 +16,12 @@ describe('Number input', () => {
 
   it('rounds numbers', async () => {
     await expect( page ).toFill( '#input-1', '1.6' )
-    // await u.matchValue( '#input-1', '2' )
-    log(await u.value('#input-1'))
+    await u.wait(510)
+    await u.matchValue( '#input-1', '1.5' )
+
+    await expect( page ).toFill( '#input-2', '1.69' )
+    await u.wait(510)
+    await u.matchValue( '#input-2', '1.75' )
+
   })
 })
