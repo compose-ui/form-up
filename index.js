@@ -3,6 +3,7 @@ var progressive = require( './lib/progressive' )
 var getLabel = require( './lib/get-label' )
 var diff = require( './lib/diff' )
 var inputChange = require( './lib/input-change' )
+require( './lib/number-input' )
 require( './lib/reset' )
 
 module.exports = {
