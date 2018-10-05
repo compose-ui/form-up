@@ -5,4 +5,5 @@ window.FormUp.event = Event
 Event.ready(()=> {
   window.FormUp.inputChange.watch()
   window.FormUp.diff.watch()
+  window.FormUp.steppedNumberInput.watch(40)
 })
