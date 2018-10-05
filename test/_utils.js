@@ -3,6 +3,10 @@ module.exports = u = {
     await page.evaluate("FormUp.validate(document.querySelector('form'))")
   },
 
+  exec: async (func) => {
+    return await page.evaluate(func)
+  },
+
   type: async (selector, data) => {
     await expect(page).toFill(selector, data)
     //await page.evaluate("FormUp.validate(document.querySelector('form'))")

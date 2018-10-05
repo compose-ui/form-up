@@ -23,8 +23,17 @@ describe('Number input', () => {
     await u.wait(50)
     await u.matchValue( '#input-2', '1.75' )
 
+  })
+
+  it('forces a maximum', async () => {
     await expect( page ).toFill( '#input-1', '1000.69' )
     await u.wait(50)
     await u.matchValue( '#input-1', '100' )
+  })
+
+  it('forces a minimum', async () => {
+    await expect( page ).toFill( '#input-3', '20' )
+    await u.wait(50)
+    await u.matchValue( '#input-3', '50' )
   })
 })
