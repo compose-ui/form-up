@@ -4,6 +4,7 @@ var getLabel = require( './lib/get-label' )
 var diff = require( './lib/diff' )
 var inputChange = require( './lib/input-change' )
 var steppedNumberInput = require( './lib/stepped-number-input' )
+var externalLabels = require( './lib/external-labels' )
 require( './lib/reset' )
 
 module.exports = {
@@ -13,5 +14,6 @@ module.exports = {
   getLabel: getLabel,
   diff: diff,
   inputChange: inputChange,
-  steppedNumberInput: steppedNumberInput
+  steppedNumberInput: steppedNumberInput,
+  externalLabels: externalLabels
 }
