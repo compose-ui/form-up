@@ -7,7 +7,7 @@ const log = function(a){
 
 describe('Number input', () => {
   beforeAll(async () => {
-    await page.goto("http://localhost:8081/external-labels.html")
+    await page.goto("http://localhost:8081/step-labels.html")
 
     await page.exposeFunction( 'log', text =>
       log(text)
