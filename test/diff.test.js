@@ -21,6 +21,7 @@ describe( 'Form diff', () => {
 
   it( 'assigns data-form-diff-id to inputs', async () => {
     await expect( page ).toFill( '#input-1', 'another value' )
+    await u.wait(30)
     await u.findElement( '[data-form-diff-id]' )
   })
 
