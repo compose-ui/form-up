@@ -20,11 +20,11 @@ describe('Number input', () => {
 
   it('sets a label', async () => {
     await expect( page ).toFill( '#input-1', '1.25' )
-    await u.wait(100)
+    await u.wait(60)
     await u.matchText( '#input-1-label .label-content', 'B' )
 
     await expect( page ).toFill( '#input-1', '1.5' )
-    await u.wait(100)
+    await u.wait(60)
     await u.matchText( '#input-1-label .label-content', 'C' )
   })
 })

@@ -4,7 +4,7 @@ window.FormUp.event = Event
 
 Event.ready(()=> {
   window.FormUp.inputChange.watch()
-  window.FormUp.diff.watch()
-  window.FormUp.steppedNumberInput.watch(40)
-  window.FormUp.externalLabels.watch(40)
+  window.FormUp.diff.watch(20)
+  window.FormUp.steppedNumberInput.watch(20)
+  window.FormUp.externalLabels.watch(20)
 })
