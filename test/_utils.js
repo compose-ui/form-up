@@ -48,7 +48,7 @@ module.exports = u = {
   },
 
   matchText: async (selector, text) => {
-    return expect( await u.text(selector)).toBe(text)
+    return expect( (await u.text(selector)).trim() ).toBe(text)
   },
 
   matchValue: async (selector, val) => {
@@ -63,6 +63,14 @@ module.exports = u = {
     return await page.$eval(selector, e => e.value);
   },
 
+  valueIs: async (selector, expected) => {
+    return expect( await u.value(selector)).toBe(expected)
+  },
+
+  countIs: async (selector, expected) => {
+    return expect( await page.$$eval(selector, e => e.length)).toBe(expected)
+  },  
+
   isNull: async (selector) => {
     return expect( await page.$(selector)).toBe(null)
   },
@@ -73,7 +81,7 @@ module.exports = u = {
 
   data: async (selector, object) => {
     if ( object ) {
-      return await page.$eval(selector, (e) => e.dataset[object], object);
+      return await page.$eval(selector, (e, object) => e.dataset[object], object);
     } else {
       return JSON.parse( await page.$eval(selector, (e) => JSON.stringify(e.dataset)) );
     }

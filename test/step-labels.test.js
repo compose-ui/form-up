@@ -9,9 +9,7 @@ describe('Number input', () => {
   beforeAll(async () => {
     await page.goto("http://localhost:8081/step-labels.html")
 
-    await page.exposeFunction( 'log', text =>
-      log(text)
-    )
+    await page.exposeFunction( 'log', text => log(text) )
   })
 
   it('has a default label', async () => {

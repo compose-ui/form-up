@@ -7,4 +7,5 @@ Event.ready(()=> {
   window.FormUp.diff.watch(20)
   window.FormUp.steppedNumberInput.watch(20)
   window.FormUp.stepLabels.watch(20)
+  window.FormUp.slider.setup()
 })
