@@ -9,7 +9,6 @@ A form utlitiy module featuring simple
 - Number input bounding (min, max, and step rounding)
 - Input state change tracking
 - Form diffing
-- Better Form resets
 
 ## Validation
 
@@ -235,8 +234,14 @@ Some things to note:
 
 ### Usage
 
-All properties are set using `data-` attributes and are impmenented with unobtrusive
-javascript.
+Enable slider watching
+
+```js
+var formUp = require( 'compose-form-up' )
+formUp.slider.setup()
+```
+
+Configure your range inputs using `data-` attributes.
 
 | Attribute | Description | Example |
 |:--------|:------------|:--------|
