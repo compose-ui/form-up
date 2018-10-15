@@ -1,10 +1,12 @@
-var validation = require( './lib/validation' )
-var progressive = require( './lib/progressive' )
-var getLabel = require( './lib/get-label' )
-var diff = require( './lib/diff' )
-var inputChange = require( './lib/input-change' )
-var steppedNumberInput = require( './lib/stepped-number-input' )
-var stepLabels = require( './lib/step-labels' )
+var validation   = require( './lib/validation' ),
+    progressive  = require( './lib/progressive' ),
+    getLabel     = require( './lib/get-label' ),
+    diff         = require( './lib/diff' ),
+    inputChange  = require( './lib/input-change' ),
+    steppedInput = require( './lib/stepped-number-input' ),
+    stepLabels   = require( './lib/step-labels' ),
+    slider       = require( './lib/slider/input' )
+
 require( './lib/reset' )
 
 module.exports = {
@@ -14,6 +16,7 @@ module.exports = {
   getLabel: getLabel,
   diff: diff,
   inputChange: inputChange,
-  steppedNumberInput: steppedNumberInput,
-  stepLabels: stepLabels
+  steppedNumberInput: steppedInput,
+  stepLabels: stepLabels,
+  slider: slider
 }
