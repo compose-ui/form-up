@@ -61,6 +61,7 @@ describe('Slider Helpers', () => {
   it('creates slider html', async () => {
     var data = {
       labels: { default: ['1','2','3'] },
+      values: [1,2,3,4],
       input: 'slider-test',
       inputClass: 'slider-test-1',
       lineLabels: [],
