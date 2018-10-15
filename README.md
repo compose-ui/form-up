@@ -1,6 +1,15 @@
 # FormUp
 
-A lightwight form utlitiy module.
+A form utlitiy module featuring simple
+
+- Form validation
+- Progressive form completion
+- Fully custom Slider (range) Input 
+- Input step labels (for numbers and range inputs)
+- Number input bounding (min, max, and step rounding)
+- Input state change tracking
+- Form diffing
+- Better Form resets
 
 ## Validation
 
@@ -204,6 +213,162 @@ here      - The current step
 next      - All steps after the current step
 previous  - All steps before the current step
 completed - Any step which has been submitted (this includes current and next steps if a user has navigated back)
+```
+
+## Slider (range) inputs
+
+Takes range inputs (sliders) and adds the features you wish they had.
+
+[![Build Status](http://img.shields.io/travis/compose-ui/slider.svg?style=flat-square)](https://travis-ci.org/compose-ui/slider)
+
+### Features:
+
+- Custom values - More than numbers, creates and binds a hidden input to custom values
+- Custom labels - Display labels adjacent to the slider, or update values anywhere on the page.
+- Label prefixes/suffixes - Easily set units for labels.
+- Line labels - Label increments with whatever values you want.
+- Line marks - Add emphasis to any point(s) in your slider track.
+
+Some things to note:
+
+- All `input type="range"` elements will be converted into sliders.
+
+### Usage
+
+All properties are set using `data-` attributes and are impmenented with unobtrusive
+javascript.
+
+| Attribute | Description | Example |
+|:--------|:------------|:--------|
+| `name`                | Name attribute for hidden input (values set by slider)      | `name="rating"` |
+| `data-values`         | Set custom values for a hidden input                        | `1,4,8,15,16,23,42` |
+| `data-label`          | Label array for displaying labels. Defaults to value or data-value. To disable: `data-label='false'`. | `data-label="Poor,Fair,Good,…"` |
+| `data-label-[custom]` | Add multiple labels. | `data-label-price="10,20,…"`, `data-label-plan="Bronze,Silver,…"`.|
+| `data-step-label-[custom]` | An array of labels for displaying external to the slider. | `data-step-label-price` updates `data-step-label='price'` |
+| `data-before-label`   | Set a label prefix                                          | `$` |
+| `data-after-label`    | Set a label suffix                                          | `.00` |
+| `data-before-label-[custom]`   | Set a label prefix for a custom label              | `data-before-label-price='$'` `data-before-label-plan='Plan: '` |
+| `data-after-label-[custom]`    | Set a label suffix for a custom label              | `data-after-price-='.00 /month'` |
+| `data-mark`           | Add a marker to highlight a slider segment (1 based index)  | `1,5,10` |
+| `data-line-labels`    | Add labels inline on slider (1 based index)                 | `data-line-labels="Bronze,Silver,Gold"`, `data-line-labels="1:Bronze,2:Silver,3:Gold"` |
+| `data-position-label` | Add a classname to control position ('left' => '.align-left'), default: 'right'  | `left` or `right` |
+
+
+### Examples:
+
+#### Simple: Add a label and suffix to a standard 0-100 range input
+
+Use `data-after-label='%'` to add a suffix to the slider label.
+
+```html
+<input type="range" min="0" max="100" data-after-label="%">
+```
+
+### Custom value
+
+Set custom values for an input. 
+
+```html
+<input type="range" data-input='rating' data-values="poor,fair,good,great">
+```
+
+This will:
+
+- Create a new `hidden` input with `name='rating'`.
+- Set the slider's attributes `min="0"` and `max="3"`, so only four choices can be selected.
+- Update the value on the hidden input to the corresponding value when the slider is changed.
+- Display the custom value in the slider's label.
+
+### Turn off internal slider label
+
+To prevent a slider from having an internal label set `data-label='false'`.
+
+```html
+<input type='range' name='rating' data-label='false'>
+```
+
+To to display labels somewhere else on the page, use a step label see below for an example of how to use step labels.
+
+## Step Labels (for number and range inputs)
+
+Step labels offer a way to set a label on another element 
+
+```html
+Input:
+<input type='number' data-step-label-rating="Poor, Fair, Good, Great, Excellent" min='0' max='4'>
+
+Step label element:
+<span data-step-label='rating'></span>
+```
+The input's step label attribute, is converted to an array; `['Poor','Fair','Good','Great','Excellent']` and whenever the input is changed,
+it uses the value to find the correct label in the array and updates the HTML of the `<span>`.
+
+Since the `min` attribute is `0` the Array is zero based, and if the input value is `3`, the corresponding label will be `Great`.
+
+The HTML for the step-label will be updated as follows.
+
+```html
+<span data-step-label='rating'>
+  <span class='label-content'>Great</span>
+</span>
+```
+
+Array indexes for labels are always based off of the input value minus the `min` attribute. So if your value is `50` and your min is `50`
+it will select the first `0th` label in the array.
+
+Note:
+If your labels need to contain commas, you can separate step-labels with a semicolon
+instead. For example: `data-step-label-cost="$10,000; $20,000; $30,000"`.
+
+### Use slider labels and step labels
+
+Here's an example of a slider which ties units to price, displaying units on the slider and price elsewhere on the page.
+
+```html
+<input type='range' name='units'
+  data-values='1,3,5,7'
+  data-before-label='scale: '
+  data-step-label-price='$10,$30,$50,$70'>
+
+<span data-step-label='price'></span>
+```
+
+This will:
+
+- Display a label on the slider: `scale: 1`.
+- Create a hidden input with `name='scale'` and set its value to `1`.
+- Find elements matching `data-step-label='price'` and set its contents to: `$10`.
+
+
+## Input State Changes (on range and number inputs)
+
+If a slider or number input increases, decreases, or returns to its original value, it can update an element contents and `data-` attribute to describe the change.
+
+```html
+<span data-track-input-state='#id-of-input'></span>
+```
+
+If an input is updated this element will be udpated as follows.
+
+```html
+<span data-input-state='initial' data-track-input-state='#id-of-input'></span>
+<span data-input-state='increased' data-track-input-state='#id-of-input'></span>
+<span data-input-state='decreased' data-track-input-state='#id-of-input'></span>
+```
+
+This is useful to change colors or hide and show content based on slider changes. For example.
+
+```css
+[data-input-state=increased] { color: green; }
+[data-input-state=decreased] { color: red; }
+```
+
+These `data-` state attributes will also be added to the input and its label parent (if it has one). For example:
+
+```html
+<label data-input-state='increased'>
+  <input type='number' data-input-state='increased' … >
+</label>
 ```
 
 ## Form Diff
