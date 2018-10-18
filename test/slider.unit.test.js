@@ -9,26 +9,27 @@ const log = function(a){
 // Unit tests
 describe('Slider Helpers', () => {
   it('sets values', async () => {
-    expect( helpers.getValues(0,10) ).toMatchObject( [0,1,2,3,4,5,6,7,8,9,10] ) 
-    expect( helpers.getValues(null,null,'a,b,c,d,e,f,g,h,j,k,l,m,n,o') ).toMatchObject( ['a','b','c','d','e','f','g','h','j','k','l','m','n','o'] ) 
+    expect( helpers.getValues(0,10) ).toMatchObject( {"0": 0, "1": 1, "10": 10, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9} ) 
+    expect( helpers.getValues(0,10,null,2) ).toMatchObject( {"0": 0, "10": 10, "2": 2, "4": 4, "6": 6, "8": 8} ) 
+    expect( helpers.getValues(0,100,'a,b,c,d,e') ).toMatchObject( {"0": "a", "1": "b", "2": "c", "3": "d", "4": "e"} ) 
   })
 
   it('gets labels', async () => {
-    expect( helpers.getLabels( { test: 'a, b, c' } )).toMatchObject( { test: ['a', 'b', 'c'] } ) 
-    expect( helpers.getLabels( {'': 'a,b,c'} )).toMatchObject( { default: ['a','b','c'] } ) 
-    expect( helpers.getLabels( {'': 'none'} )).toBe( false ) 
+    expect( helpers.getLabels( { test: 'a, b, c' }, { min: 0, max: 2, step: 1 } )).toMatchObject( { test: {"0": "a", "1": "b", "2": "c"}} ) 
+    expect( helpers.getLabels( { default: 'a,b,c'}, { min: 0, max: 2, step: 1} )).toMatchObject( { default: {"0": "a", "1": "b", "2": "c"} } ) 
+    expect( helpers.getLabels( { default: 'none'}, { min: 0, max: 2, step: 1 } )).toBe( false ) 
   })
 
   it('gets line labels', async () => {
-    expect( helpers.getLineLabels( '1:hi;2:yo;howdy' ) ).toMatchObject( [undefined, 'hi','yo','howdy'] ) 
-    expect( helpers.getLineLabels( 'hi,yo,howdy' ) ).toMatchObject( [undefined, 'hi','yo','howdy'] ) 
-    expect( helpers.getLineLabels( 'hi,yo,5:howdy' ) ).toMatchObject( [undefined, 'hi','yo', undefined, undefined,'howdy'] ) 
+    expect( helpers.getLineLabels( '1:hi;2:yo;howdy' ) ).toMatchObject( {"1": "hi", "2": "yo", "3": "howdy"} ) 
+    expect( helpers.getLineLabels( 'hi,yo,howdy' ) ).toMatchObject( {"1": "hi", "2": "yo", "3": "howdy"} ) 
+    expect( helpers.getLineLabels( 'hi,yo,5:howdy' ) ).toMatchObject( {"1": "hi", "2": "yo", "5": "howdy"} ) 
   })
 
   it('gets label html', async () => {
-    expect( template.labelHTML({ labels: { default: [1,2,3] }}, 'default') ).toBe("<span class='label-content'></span>")
+    var labels = { labels: { default: [1,2,3] }, min: 1, max: 3, step: 1}
+    expect( template.labelHTML(labels, 'default') ).toBe("<span class='label-content'></span>")
 
-    var labels = { labels: { default: [1,2,3] }}
     labels['before-label'] = "$"
     labels['after-label'] = "/month"
     var label = template.addLabels(labels)
@@ -54,8 +55,8 @@ describe('Slider Helpers', () => {
   it('adds line labels', async () => {
     // Line labels are 1 indexed and the first item will always be undefined
     // Because they are added to the array starting at index 1
-    expect( template.addLineLabel([undefined, 1,2,3, undefined, undefined,5], 1) ).toMatch("<span class='slider-line-label'>1</span>")
-    expect( template.addLineLabel([undefined, 1,2,3, undefined, undefined,5], 4) ).toBe("")
+    expect( template.addLineLabel('test') ).toMatch("<span class='slider-line-label'>test</span>")
+    expect( template.addLineLabel('') ).toBe("")
   })
 
   it('creates slider html', async () => {

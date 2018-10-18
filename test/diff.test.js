@@ -131,9 +131,9 @@ describe( 'Form diff', () => {
     await u.setValue( '#range-input', 3 )
     await u.wait(110)
 
-    await u.matchText( '[data-diff-name*=range-input] .input-diff-label', 'Rate our service' )
-    await u.matchText( '[data-diff-name*=range-input] .input-diff-initial', 'good' )
-    await u.matchText( '[data-diff-name*=range-input] .input-diff-value', 'great' )
+    await u.matchText( '[data-diff-name*=range-input] td.input-diff-label', 'Rate our service' )
+    await u.matchText( '[data-diff-name*=range-input] td.input-diff-initial', 'good' )
+    await u.matchText( '[data-diff-name*=range-input] td.input-diff-value', 'great' )
   })
 
   it( 'ignores text around the labelledby label', async() => {
