@@ -162,9 +162,16 @@ describe('Slider', () => {
   })
 
   it('supports step values', async () => {
-    //await u.setValue('#slider-1 input', '10')
-    //await u.valueIs('#slider-1 input', '10')
     await u.findElement('#slider-10 input[max="100"]')
     await u.countIs('#slider-10 .slider-segment-mark', 3)
+    await u.countIs('#slider-10 .slider-fill', 10)
+
+    await u.setValue('#slider-10 input', '20')
+    await u.matchText('#slider-10 .slider-label', '20')
+    await u.countIs('#slider-10 .slider-fills .filled', 2)
+
+    await u.setValue('#slider-10 input', '100')
+    await u.matchText('#slider-10 .slider-label', '100')
+    await u.countIs('#slider-10 .slider-fills .filled', 10)
   })
 })
