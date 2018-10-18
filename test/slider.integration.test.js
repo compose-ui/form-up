@@ -147,7 +147,7 @@ describe('Slider', () => {
 
   })
 
-  it('updates external labels with slider-state tracking', async () => {
+  it('updates before and after labels', async () => {
 
     // Make sure the default label is never displayed when multiple labels are present
     await u.isNull(`#slider-9 .slider-label-default`)
@@ -159,5 +159,12 @@ describe('Slider', () => {
     await u.matchText('#slider-9 .slider-label-a', 'a4a')
     await u.matchText('#slider-9 .slider-label-b', 'b8b')
 
+  })
+
+  it('supports step values', async () => {
+    //await u.setValue('#slider-1 input', '10')
+    //await u.valueIs('#slider-1 input', '10')
+    await u.findElement('#slider-10 input[max="100"]')
+    await u.countIs('#slider-10 .slider-segment-mark', 3)
   })
 })
