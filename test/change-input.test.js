@@ -52,14 +52,30 @@ describe( 'Progressive form', () => {
     await u.isNull( '#textarea.changed-value' )
   })
 
+  it( 'adds checked class to initially checked radio option', async () => {
+    await u.findElement( '#label-radio-1.checked-radio' )
+    await u.isNull( '#label-radio-2.checked-radio' )
+    await u.isNull( '#label-radio-3.checked-radio' )
+  })
+
   it( 'detects changes to a radio input', async () => {
     await u.isNull( '[type="radio"].changed-value' )
 
     await expect( page ).toClick( '#radio-2' )
+    
+    await u.isNull( '#label-radio-1.checked-radio' )
+    await u.findElement( '#label-radio-2.checked-radio' )
+    await u.isNull( '#label-radio-3.checked-radio' )
+    
     await u.findElement( '#radio-1.changed-value' )
     await u.isNull( '#radio-3.changed-value' )
 
     await expect( page ).toClick( '#radio-1' )
+
+    await u.findElement( '#label-radio-1.checked-radio' )
+    await u.isNull( '#label-radio-2.checked-radio' )
+    await u.isNull( '#label-radio-3.checked-radio' )
+
     await u.isNull( '#radio-1.changed-value' )
     await u.isNull( '#radio-2.changed-value' )
   })
